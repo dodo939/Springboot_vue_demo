@@ -5,6 +5,7 @@ import io.github.dodo939.pojo.User;
 import io.github.dodo939.service.UserService;
 import io.github.dodo939.utils.JwtUtil;
 import io.github.dodo939.utils.MD5Util;
+import io.github.dodo939.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +18,8 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public User findUserByUsername(String username) {
-        return userMapper.findByUsername(username);
+    public User getUserByUsername(String username) {
+        return userMapper.getUserByUsername(username);
     }
 
     @Override
@@ -41,7 +42,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, Object> parseToken(String token) {
-        return JwtUtil.parseToken(token);
+    public User getCurrentUser() {
+        Map<String, Object> claims = ThreadLocalUtil.getClaim();
+        String username = (String) claims.get("username");
+        return userMapper.getUserByUsername(username);
     }
 }

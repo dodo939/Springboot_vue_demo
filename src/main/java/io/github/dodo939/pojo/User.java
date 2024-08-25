@@ -1,10 +1,13 @@
 package io.github.dodo939.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.LocalDateTime;
 
 public class User {
     private Integer id;
     private String username;
+    @JsonIgnore  // SpringMVC 把对象转为 JSON 时，将忽略该属性
     private String password;
     private String nickname;
     private String email;

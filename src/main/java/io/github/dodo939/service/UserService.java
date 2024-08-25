@@ -2,11 +2,9 @@ package io.github.dodo939.service;
 
 import io.github.dodo939.pojo.User;
 
-import java.util.Map;
-
 public interface UserService {
 
-    User findUserByUsername(String username);
+    User getUserByUsername(String username);
 
     void register(String username, String md5Password);
 
@@ -14,5 +12,5 @@ public interface UserService {
 
     String generateToken(User user);
 
-    Map<String, Object> parseToken(String token);
+    User getCurrentUser();
 }
