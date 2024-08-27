@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void register(String username, String password) {
         String md5Password = MD5Util.getMD5(password);
-        userMapper.add(username, md5Password);
+        userMapper.addUser(username, md5Password);
     }
 
     @Override
@@ -46,5 +46,10 @@ public class UserServiceImpl implements UserService {
         Map<String, Object> claims = ThreadLocalUtil.getClaim();
         String username = (String) claims.get("username");
         return userMapper.getUserByUsername(username);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        userMapper.updateUser(user);
     }
 }

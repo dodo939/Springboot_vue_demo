@@ -13,4 +13,6 @@ public interface UserService {
     String generateToken(User user);
 
     User getCurrentUser();
+
+    void updateUser(User user);
 }

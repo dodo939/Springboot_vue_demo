@@ -1,15 +1,23 @@
 package io.github.dodo939.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDateTime;
 
 public class User {
+    @NotNull
     private Integer id;
     private String username;
     @JsonIgnore  // SpringMVC 把对象转为 JSON 时，将忽略该属性
     private String password;
+    @NotEmpty
+    @Pattern(regexp = "^\\S{1,10}$")
     private String nickname;
+    @Email
     private String email;
     private String userPic;
     private LocalDateTime createTime;
