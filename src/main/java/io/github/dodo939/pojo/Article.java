@@ -1,15 +1,28 @@
 package io.github.dodo939.pojo;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.URL;
+
 import java.time.LocalDateTime;
 
 public class Article {
     private Integer id;
+    @NotEmpty
+    @Pattern(regexp = "^\\S{1,10}$")
     private String title;
+    @NotEmpty
     private String content;
+    @NotEmpty
+    @URL
     private String coverImg;
+    @NotEmpty
+    @Pattern(regexp = "^(草稿|已发布)$")
     private String state;
+    @NotNull
     private Integer categoryId;
-    private String createUser;
+    private Integer createUser;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 
@@ -61,11 +74,11 @@ public class Article {
         this.categoryId = categoryId;
     }
 
-    public String getCreateUser() {
+    public Integer getCreateUser() {
         return createUser;
     }
 
-    public void setCreateUser(String createUser) {
+    public void setCreateUser(Integer createUser) {
         this.createUser = createUser;
     }
 
