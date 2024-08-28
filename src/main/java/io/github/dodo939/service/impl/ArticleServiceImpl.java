@@ -34,4 +34,20 @@ public class ArticleServiceImpl implements ArticleService {
         pageBean.setItems(page.getResult());
         return pageBean;
     }
+
+    @Override
+    public Article getArticleById(Integer id) {
+        Integer createUser = userService.getCurrentUserId();
+        return articleMapper.getArticleById(id, createUser);
+    }
+
+    @Override
+    public void updateArticle(Article article) {
+        articleMapper.updateArticle(article);
+    }
+
+    @Override
+    public void deleteArticle(Integer id) {
+        articleMapper.deleteArticle(id);
+    }
 }

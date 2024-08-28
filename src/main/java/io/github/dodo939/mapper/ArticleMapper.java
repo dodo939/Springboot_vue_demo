@@ -2,8 +2,7 @@ package io.github.dodo939.mapper;
 
 import com.github.pagehelper.Page;
 import io.github.dodo939.pojo.Article;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface ArticleMapper {
@@ -13,4 +12,13 @@ public interface ArticleMapper {
     void addArticle(Article article);
 
     Page<Article> listArticle(Integer categoryId, String state, Integer createUser);
+
+    @Select("select * from article where id = #{id} and create_user = #{createUser}")
+    Article getArticleById(Integer id, Integer createUser);
+
+    @Update("update article set title = #{title}, content = #{content}, cover_img = #{coverImg}, state = #{state}, category_id = #{categoryId}, update_time = now() where id = #{id}")
+    void updateArticle(Article article);
+
+    @Delete("delete from article where id = #{id}")
+    void deleteArticle(Integer id);
 }

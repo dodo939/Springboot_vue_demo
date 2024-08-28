@@ -29,4 +29,33 @@ public class ArticleController {
     ) {
         return Result.success(articleService.listArticle(pageNum, pageSize, categoryId, state));
     }
+
+    @GetMapping("/detail")
+    public Result<?> getArticleDetail(@RequestParam Integer id) {
+        Article article = articleService.getArticleById(id);
+        if (article == null) {
+            return Result.error("文章不存在");
+        }
+        return Result.success(article);
+    }
+
+    @PutMapping("/update")
+    public Result<Void> updateArticle(@RequestBody @Validated Article article) {
+        if (articleService.getArticleById(article.getId()) == null) {
+            return Result.error("文章不存在");
+        } else {
+            articleService.updateArticle(article);
+            return Result.success();
+        }
+    }
+
+    @DeleteMapping("/delete")
+    public Result<Void> deleteArticle(@RequestParam Integer id) {
+        if (articleService.getArticleById(id) == null) {
+            return Result.error("文章不存在");
+        } else {
+            articleService.deleteArticle(id);
+            return Result.success();
+        }
+    }
 }
