@@ -62,7 +62,8 @@ public class UserServiceImpl implements UserService {
         return userMapper.getUserByUsername(username);
     }
 
-    public Integer getCurrUserId() {
+    @Override
+    public Integer getCurrentUserId() {
         Map<String, Object> claims = ThreadLocalUtil.getClaim();
         return (Integer) claims.get("id");
     }
@@ -74,12 +75,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateAvatar(String avatarUrl) {
-        Integer Id = getCurrUserId();
+        Integer Id = getCurrentUserId();
         userMapper.updateAvatar(Id, avatarUrl);
     }
 
     @Override
-    public Result<?> updatePassword(Map<String, String> params) {
+    public Result<Void> updatePassword(Map<String, String> params) {
         String oldPwd = params.get("old_pwd");
         String newPwd = params.get("new_pwd");
         String rePwd = params.get("re_pwd");
@@ -96,7 +97,7 @@ public class UserServiceImpl implements UserService {
             return Result.error("密码格式错误");
         }
         if (checkPassword(oldPwd)) {
-            Integer Id = getCurrUserId();
+            Integer Id = getCurrentUserId();
             String md5Password = MD5Util.getMD5(newPwd);
             userMapper.updatePassword(Id, md5Password);
             return Result.success();

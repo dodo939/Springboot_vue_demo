@@ -64,7 +64,7 @@ public class UserController {
     }
 
     @PatchMapping("/updatePwd")
-    public Result<?> updatePwd(@RequestBody Map<String, String> params) {
+    public Result<Void> updatePwd(@RequestBody Map<String, String> params) {
         return userService.updatePassword(params);
     }
 }

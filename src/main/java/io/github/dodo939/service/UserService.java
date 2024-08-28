@@ -19,9 +19,11 @@ public interface UserService {
 
     User getCurrentUser();
 
+    Integer getCurrentUserId();
+
     void updateUser(User user);
 
     void updateAvatar(String avatarUrl);
 
-    Result<?> updatePassword(Map<String, String> params);
+    Result<Void> updatePassword(Map<String, String> params);
 }
