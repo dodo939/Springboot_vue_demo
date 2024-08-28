@@ -2,7 +2,6 @@ package io.github.dodo939.service.impl;
 
 import io.github.dodo939.mapper.CategoryMapper;
 import io.github.dodo939.pojo.Category;
-import io.github.dodo939.pojo.Result;
 import io.github.dodo939.service.CategoryService;
 import io.github.dodo939.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
