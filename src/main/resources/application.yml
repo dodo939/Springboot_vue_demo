@@ -1,3 +1,6 @@
+server:
+  port: 8080  # 服务器端口
+
 spring:
   application:
     name: big-event
@@ -11,8 +14,14 @@ spring:
       host: localhost  # Redis服务器地址
       port: 6379  # Redis服务器端口
       database: 0  # Redis数据库索引（默认为0）
-#      timeout: 0  # 连接超时时间（毫秒）
+      timeout:  # 连接超时时间（毫秒）
 
 mybatis:
   configuration:
     map-underscore-to-camel-case: true  # 下划线命名转驼峰命名的自动映射
+
+AliOSS:
+  endpoint: ${OSS_ENDPOINT}  # 阿里云OSS的Endpoint
+  bucket-name: ${OSS_BUCKET_NAME}  # 阿里云OSS的Bucket名称
+  access-key-id: ${OSS_ACCESS_KEY_ID}  # 阿里云OSS的AccessKeyId
+  access-key-secret: ${OSS_ACCESS_KEY_SECRET}  # 阿里云OSS的AccessKeySecret
