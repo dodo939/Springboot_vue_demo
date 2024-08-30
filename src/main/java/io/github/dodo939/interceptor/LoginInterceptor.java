@@ -25,7 +25,6 @@ public class LoginInterceptor implements HandlerInterceptor {
             Map<String, Object> claims = JwtUtil.parseToken(token);
             String key = "big-event:tokens:" + claims.get("id") + ":" + token;
             if (redisTemplate.opsForValue().get(key) == null) {
-                System.out.println(key);
                 response.setStatus(401);
                 return false;
             } else {

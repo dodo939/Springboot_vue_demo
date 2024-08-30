@@ -63,8 +63,7 @@ public class UserServiceImpl implements UserService {
         /*
          * User 中的 createTime 和 updateTime 字段在数据库中为下划线命名 create_time 和 update_time
          * updateTime, createTime 和 update_time, create_time 无法对应，因此会缺少这两个字段
-         * 所以在 application.properties 中配置了驼峰命名自动映射
-         * mybatis.configuration.map-underscore-to-camel-case=true
+         * 所以在 application.yml 中配置了驼峰命名自动映射
          */
         return userMapper.getUserByUsername(username);
     }
@@ -110,7 +109,7 @@ public class UserServiceImpl implements UserService {
             // 清除 redis 中缓存的 token
             // 删除 redis 中以 "big-event:tokens:{Id}:" 开头的键值对
             // MARK: 奇妙的匹配规则
-            String pattern = "big-event:tokens:" + Id + ":" + "*".repeat(36) + "." + "*".repeat(115) + "." + "*".repeat(43);
+            String pattern = "big-event:tokens:" + Id + ":" + "*".repeat(196);
             Set<String> keys = redisTemplate.keys(pattern);
             if (keys != null) {
                 redisTemplate.delete(keys);

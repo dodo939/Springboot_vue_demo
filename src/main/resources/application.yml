@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: big-event
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver  # 数据库驱动类
+    url: jdbc:mysql://localhost:3306/big_event  # 数据库连接地址
+    username: root  # 数据库用户名
+    password: 123456  # 数据库密码
+  data:
+    redis:
+      host: localhost  # Redis服务器地址
+      port: 6379  # Redis服务器端口
+      database: 0  # Redis数据库索引（默认为0）
+#      timeout: 0  # 连接超时时间（毫秒）
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true  # 下划线命名转驼峰命名的自动映射
