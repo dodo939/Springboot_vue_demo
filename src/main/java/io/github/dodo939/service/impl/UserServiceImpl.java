@@ -7,17 +7,20 @@ import io.github.dodo939.service.UserService;
 import io.github.dodo939.utils.JwtUtil;
 import io.github.dodo939.utils.MD5Util;
 import io.github.dodo939.utils.ThreadLocalUtil;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Override
     public User getUserByUsername(String username) {
@@ -45,6 +48,7 @@ public class UserServiceImpl implements UserService {
     public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("id", user.getId());
+        claims.put("uuid", UUID.randomUUID().toString());
         claims.put("username", user.getUsername());
         return JwtUtil.genToken(claims);
     }
@@ -100,6 +104,15 @@ public class UserServiceImpl implements UserService {
             Integer Id = getCurrentUserId();
             String md5Password = MD5Util.getMD5(newPwd);
             userMapper.updatePassword(Id, md5Password);
+            // 清除 redis 中缓存的 token
+            // 删除 redis 中以 "big-event:tokens:{Id}:" 开头的键值对
+            // TODO: BUG: 无法匹配到结果，原因未知
+            Set<String> keys = redisTemplate.keys("big-event:tokens:" + Id + ":*");
+            if (keys != null) {
+//                redisTemplate.delete(keys);  // TODO: 取消注释该行
+                System.out.println("delete: " + keys);  // 临时输出
+            }
+
             return Result.success();
         } else {
             return Result.error("旧密码错误");
