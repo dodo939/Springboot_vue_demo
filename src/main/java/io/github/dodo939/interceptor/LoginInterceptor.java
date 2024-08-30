@@ -30,7 +30,6 @@ public class LoginInterceptor implements HandlerInterceptor {
                 return false;
             } else {
                 // 如果验证通过，则更新 token 的过期时间
-                System.out.println("success "+key);
                 redisTemplate.expire(key, 24, TimeUnit.HOURS);
             }
             ThreadLocalUtil.setClaim(claims);

@@ -13,7 +13,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -106,11 +109,11 @@ public class UserServiceImpl implements UserService {
             userMapper.updatePassword(Id, md5Password);
             // 清除 redis 中缓存的 token
             // 删除 redis 中以 "big-event:tokens:{Id}:" 开头的键值对
-            // TODO: BUG: 无法匹配到结果，原因未知
-            Set<String> keys = redisTemplate.keys("big-event:tokens:" + Id + ":*");
+            // MARK: 奇妙的匹配规则
+            String pattern = "big-event:tokens:" + Id + ":" + "*".repeat(36) + "." + "*".repeat(115) + "." + "*".repeat(43);
+            Set<String> keys = redisTemplate.keys(pattern);
             if (keys != null) {
-//                redisTemplate.delete(keys);  // TODO: 取消注释该行
-                System.out.println("delete: " + keys);  // 临时输出
+                redisTemplate.delete(keys);
             }
 
             return Result.success();
