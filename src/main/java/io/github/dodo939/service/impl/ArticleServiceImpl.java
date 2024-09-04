@@ -43,11 +43,19 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public void updateArticle(Article article) {
-        articleMapper.updateArticle(article);
+        Integer createUser = userService.getCurrentUserId();
+        articleMapper.updateArticle(article, createUser);
     }
 
     @Override
     public void deleteArticle(Integer id) {
-        articleMapper.deleteArticle(id);
+        Integer createUser = userService.getCurrentUserId();
+        articleMapper.deleteArticle(id, createUser);
+    }
+
+    @Override
+    public void deleteArticleByCategoryId(Integer id) {
+        Integer createUser = userService.getCurrentUserId();
+        articleMapper.deleteArticleByCategoryId(id, createUser);
     }
 }

@@ -16,9 +16,12 @@ public interface ArticleMapper {
     @Select("select * from article where id = #{id} and create_user = #{createUser}")
     Article getArticleById(Integer id, Integer createUser);
 
-    @Update("update article set title = #{title}, content = #{content}, cover_img = #{coverImg}, state = #{state}, category_id = #{categoryId}, update_time = now() where id = #{id}")
-    void updateArticle(Article article);
+    @Update("update article set title = #{title}, content = #{content}, cover_img = #{coverImg}, state = #{state}, category_id = #{categoryId}, update_time = now() where id = #{id} and create_user = #{createUser}")
+    void updateArticle(Article article, Integer createUser);
 
-    @Delete("delete from article where id = #{id}")
-    void deleteArticle(Integer id);
+    @Delete("delete from article where id = #{id} and create_user = #{createUser}")
+    void deleteArticle(Integer id, Integer createUser);
+
+    @Delete("delete from article where category_id = #{id} and create_user = #{createUser}")
+    void deleteArticleByCategoryId(Integer id, Integer createUser);
 }
