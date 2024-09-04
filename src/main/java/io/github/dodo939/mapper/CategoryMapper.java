@@ -21,7 +21,7 @@ public interface CategoryMapper {
             "values (#{categoryName}, #{categoryAlias}, #{createUser}, now(), now())")
     void addCategory(Category category);
 
-    @Update("update category set category_name = #{categoryName}, category_alias = #{categoryAlias}, update_time = now() where id = #{id} and create_user = #{createUser}")
+    @Update("update category set category_name = #{category.categoryName}, category_alias = #{category.categoryAlias}, update_time = now() where id = #{category.id} and create_user = #{createUser}")
     void updateCategory(Category category, Integer createUser);
 
     @Delete("delete from category where id = #{id} and create_user = #{createUser}")
